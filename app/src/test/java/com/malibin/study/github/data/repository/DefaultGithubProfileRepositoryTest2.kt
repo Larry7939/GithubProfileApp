@@ -6,7 +6,8 @@ import com.malibin.study.github.domain.profile.GithubProfile
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -49,7 +50,7 @@ internal class DefaultGithubProfileRepositoryTest2 {
         assertAll(
             { coVerify(exactly = 0) { fakeRemoteGithubProfileSource.getGithubProfile("name1") } },
             { coVerify(exactly = 0) { fakeLocalGithubProfileSource.saveGithubProfile(gitHubProfile) } },
-            { assertThat(actualGithubProfile).isEqualTo(Result.success(gitHubProfile)) },
+            { assertThat(actualGithubProfile.getOrNull()).isEqualTo(gitHubProfile) },
             { coVerify(exactly = 1) { fakeLocalGithubProfileSource.getGithubProfile("name1") } }
         )
     }

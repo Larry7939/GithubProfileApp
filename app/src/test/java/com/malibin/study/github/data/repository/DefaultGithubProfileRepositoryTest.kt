@@ -7,11 +7,14 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
+@OptIn(ExperimentalCoroutinesApi::class)
 internal class DefaultGithubProfileRepositoryTest {
     private lateinit var fakeLocalGithubProfileSource: GithubProfileSource
     private lateinit var fakeRemoteGithubProfileSource: GithubProfileSource
@@ -72,7 +75,6 @@ internal class DefaultGithubProfileRepositoryTest {
 
         }
 
-
     @Test
     fun `userName이 Local DB에 존재하면 GithubProfile을 반환한다`() = runBlocking {
         //given
@@ -93,7 +95,7 @@ internal class DefaultGithubProfileRepositoryTest {
         val actualResult = defaultGithubProfileRepository.getGithubProfile("name1")
         //then
         assertAll(
-            { assertThat(actualResult).isEqualTo(Result.success(gitHubProfile))},
+            { assertThat(actualResult.getOrNull()).isEqualTo(gitHubProfile)},
             { coVerify(exactly = 1) { fakeLocalGithubProfileSource.getGithubProfile("name1") } }
         )
     }
