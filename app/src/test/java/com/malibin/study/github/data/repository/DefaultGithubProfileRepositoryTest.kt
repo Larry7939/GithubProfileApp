@@ -76,7 +76,7 @@ internal class DefaultGithubProfileRepositoryTest {
         }
 
     @Test
-    fun `userName이 Local DB에 존재하면 GithubProfile을 반환한다`() = runBlocking {
+    fun `userName이 Local DB에 존재하면 GithubProfile을 반환한다`() = runTest {
         //given
         gitHubProfile = GithubProfile(
             id = 1L,
@@ -102,7 +102,7 @@ internal class DefaultGithubProfileRepositoryTest {
 
     @Test
     fun `GithubProfile을 LocalDB에 저장할 때 LocalGithubProfileSource의 saveGithubProfile 메소드가 호출된다`() =
-        runBlocking {
+        runTest {
             //given
             gitHubProfile = GithubProfile(
                 id = 1L,

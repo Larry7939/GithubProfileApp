@@ -28,8 +28,9 @@ internal class DefaultGithubProfileRepositoryTest2 {
         )
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `로컬 상에 Github Profile이 저장되어있는 경우, Remote 요청을 하지 않는다`() = runBlocking {
+    fun `로컬 상에 Github Profile이 저장되어있는 경우, Remote 요청을 하지 않는다`() = runTest {
         // given
         gitHubProfile = GithubProfile(
             id = 1L,
