@@ -59,7 +59,7 @@ internal class MainViewModelTest {
         assertAll(
             { coVerify(exactly = 1) { fakeProfileRepository.getGithubProfile(any()) } },
             {
-                assertThat(fakeMainViewModel.githubProfile.getOrAwaitValue()).isEqualTo(
+                assertThat(fakeMainViewModel.githubProfile.value).isEqualTo(
                     expectedGithubProfile
                 )
             }
@@ -77,7 +77,7 @@ internal class MainViewModelTest {
         //then
         assertAll(
             { coVerify(exactly = 1) { fakeProfileRepository.getGithubProfile(any()) } },
-            { assertThat(fakeMainViewModel.isError.getOrAwaitValue()).isTrue() }
+            { assertThat(fakeMainViewModel.isError.value).isTrue() }
         )
     }
 }

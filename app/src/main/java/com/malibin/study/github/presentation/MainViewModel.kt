@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.malibin.study.github.domain.profile.GithubProfile
 import com.malibin.study.github.domain.repository.GithubProfileRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -14,14 +16,14 @@ class MainViewModel(
 
     val githubId = MutableLiveData("")
 
-    private val _githubProfile = MutableLiveData<GithubProfile?>()
-    val githubProfile: LiveData<GithubProfile?> = _githubProfile
+    private val _githubProfile = MutableStateFlow<GithubProfile?>(null)
+    val githubProfile: StateFlow<GithubProfile?> = _githubProfile
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _isLoading = MutableStateFlow<Boolean>(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
-    private val _isError = MutableLiveData<Boolean>()
-    val isError: LiveData<Boolean> = _isError
+    private val _isError = MutableStateFlow<Boolean>(false)
+    val isError: StateFlow<Boolean> = _isError
 
     fun loadGithubProfile() {
         viewModelScope.launch {
